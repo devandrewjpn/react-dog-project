@@ -35,12 +35,12 @@ export const UserStorage = ({ children }) => {
             setLoading(true)
             const { url, options } = TOKEN_POST({ username, password })
             const response = await fetch(url, options)
-            if(!response.ok) throw new Error(`Usuário inválido`)
+            if (!response.ok) throw new Error(`Usuário inválido`)
             const { token } = await response.json()
             window.localStorage.setItem('token', token)
             await getUser(token)
             navigate('/conta')
-        } catch(error){
+        } catch (error) {
             setError(error.message)
             setLogin(false)
         } finally {
@@ -51,20 +51,22 @@ export const UserStorage = ({ children }) => {
     React.useEffect(() => {
         async function autoLogin() {
             const token = window.localStorage.getItem('token')
-            if(token) {
+            if (token) {
                 try {
                     setError(null)
                     setLoading(true)
-                    const {url, options} = TOKEN_VALIDATE_POST(token)
-                    const response = await fetch(url,options)
-                    if(!response.ok) throw new Error('Token inválido')
+                    const { url, options } = TOKEN_VALIDATE_POST(token)
+                    const response = await fetch(url, options)
+                    if (!response.ok) throw new Error('Token inválido')
                     await getUser(token)
-                } catch(error) {
+                } catch (error) {
                     userLogout()
                 } finally {
                     setLoading(false)
                 }
-                
+
+            } else {
+                setLogin(false)
             }
         }
         autoLogin()
