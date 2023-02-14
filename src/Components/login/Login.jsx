@@ -6,6 +6,8 @@ import LoginForm from './LoginForm'
 import LoginPasswordRecover from './LoginPasswordRecover'
 import LoginPasswordReset from './LoginPasswordReset'
 import styles from './Login.module.css'
+import NotFound from '../NotFound'
+import Head from '../Helper/Head'
 
 const Login = () => {
 
@@ -14,12 +16,14 @@ const Login = () => {
 
   return (
     <section className={styles.login}>
+      <Head title="Entrar" />
       <div className={styles.forms}>
         <Routes>
           <Route path='/' element={<LoginForm />} />
           <Route path='criar' element={<LoginCreate />} />
-          <Route path='recuperar' element={<LoginPasswordRecover />} />
-          <Route path='resetar' element={<LoginPasswordReset />} />
+          <Route path='forgot' element={<LoginPasswordRecover />} />
+          <Route path='reset' element={<LoginPasswordReset />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </section>
